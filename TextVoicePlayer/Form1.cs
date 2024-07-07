@@ -1,15 +1,9 @@
 ﻿using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
@@ -39,7 +33,7 @@ namespace TextVoicePlayer
         }
         // 音声フィアルを開く
 
-        private void openAudioFileToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OpenAudioFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // フォルダーMYMusicにある音声ファイルを開く
             openVoiceFileDialog.InitialDirectory
@@ -76,8 +70,10 @@ namespace TextVoicePlayer
                 currentPosition = 0;
 
                 outputDevice = new WaveOutEvent();
-                audioFile = new AudioFileReader(voiceFilePath);
-                audioFile.Position = currentPosition;
+                audioFile = new AudioFileReader(voiceFilePath)
+                {
+                    Position = currentPosition
+                };
                 outputDevice.Init(audioFile);
                 playButton.Image = Properties.Resources.play100_100;
 
@@ -92,12 +88,12 @@ namespace TextVoicePlayer
 
             // STSファイルを開く準備
             openSTSFileDialog.FileName = voiceFileDirectory + "\\" + voiceFileBaseName + ".sts";
-            openSTSFile(openSTSFileDialog);     // stsファイルを開く
+            OpenSTSFile(openSTSFileDialog);     // stsファイルを開く
         }
 
 
         // テキストファイルを開く
-        private void openSentenceToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OpenSentenceToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
 
@@ -109,13 +105,13 @@ namespace TextVoicePlayer
 
             if (openSTSFileDialog.ShowDialog() == DialogResult.OK)
             {
-                openSTSFile(openSTSFileDialog);     // stsファイルを開く
+                OpenSTSFile(openSTSFileDialog);     // stsファイルを開く
             }
         }
 
 
         // stsファイルを開く（本体）
-        private void openSTSFile(OpenFileDialog openSTSFileDialog)
+        private void OpenSTSFile(OpenFileDialog openSTSFileDialog)
         {
             string stsFilePath;//STSファイルのパス
 
@@ -140,7 +136,7 @@ namespace TextVoicePlayer
                 }
 
                 stsText = stsText.Replace("\r\n", "\n");
-                separateTimeStamp();
+                SeparateTimeStamp();
             }
             catch (FileNotFoundException)
             {
@@ -152,15 +148,15 @@ namespace TextVoicePlayer
         string stsText;
 
         // 再生ボタンを押したときの処理
-        private void playButton_Click(object sender, EventArgs e)
+        private void PlayButton_Click(object sender, EventArgs e)
         {
             // 選曲なしでプレーボタンを押したときの処理
-            if (audioFile != null) playState();
+            if (audioFile != null) PlayState();
         }
 
         bool iPlayAll = false;
         // 再生の状態により、再生開始・一時停止をトグルに切り替える。
-        private void playState()
+        private void PlayState()
         {
             Console.WriteLine("PlayState={0}   position={1}", outputDevice.PlaybackState, audioFile.Position);
             // 選曲後の処理
@@ -207,7 +203,7 @@ namespace TextVoicePlayer
 
 
         int currentSentenceNumber = 0;
-        private void textBox1_Click(object sender, EventArgs e)
+        private void TextBox1_Click(object sender, EventArgs e)
         {
 
             if (audioFile == null) return;
@@ -221,18 +217,18 @@ namespace TextVoicePlayer
             foreach (string sentenceElement in sentences)
             {
                 // 文頭からキャレットまでの全文字数から、各センテンスの文字数を引き、キャレットが何番目のセンテンスか調べる。
-                totalLetterNumber = totalLetterNumber - sentenceElement.Length;
+                totalLetterNumber -= sentenceElement.Length;
                 if (totalLetterNumber < 0)
                 {
                     break;
                 }
                 ++currentSentenceNumber;
             }
-            playSentence(currentSentenceNumber);
+            PlaySentence(currentSentenceNumber);
         }
 
 
-        private void playSentence(int n)
+        private void PlaySentence(int n)
         {
             if (audioFile == null) return;
             if (n <= 0 || n > nMax - 1) return;
@@ -260,7 +256,7 @@ namespace TextVoicePlayer
 
             for (int m = 0; m < n + 1; m++)
             {
-                totalLength = totalLength + sentences[m].Length;
+                totalLength += sentences[m].Length;
 
             }
             // 再生箇所を赤色に変える
@@ -274,8 +270,10 @@ namespace TextVoicePlayer
 
             audioFile.CurrentTime = TimeSpan.FromSeconds(startTimeMS[n] / 1000.0);
 
-            offsetSample = new OffsetSampleProvider(audioFile);
-            offsetSample.Take = TimeSpan.FromSeconds(startToPauseTimeMS / 1000.0);
+            offsetSample = new OffsetSampleProvider(audioFile)
+            {
+                Take = TimeSpan.FromSeconds(startToPauseTimeMS / 1000.0)
+            };
 
             outputDevice.Init(offsetSample);
             timer1.Start();
@@ -292,7 +290,7 @@ namespace TextVoicePlayer
         int previousTotalLength = 0;    // 文頭からひとつ前のセンテンスの再生時の再生部分までの文字数（赤文字を黒にするため）
         int previousSentenceLength = 0; // 文頭からひとつ前のセンテンスの再生時のそのセンテンスの文字数（赤文字を黒にするため）
 
-        private void timer1_Tick(object sender, EventArgs e)
+        private void Timer1_Tick(object sender, EventArgs e)
         {
 
             //再生位置（秒）を計算して表示
@@ -309,7 +307,7 @@ namespace TextVoicePlayer
             {
                 for (int m = 0; m < nMax; m++)
                 {
-                    totalLength = totalLength + sentences[m].Length;
+                    totalLength += sentences[m].Length;
 
                     if (currentTime > startTimeMS[m] / 1000 && currentTime < pauseTimeMS[m] / 1000)
                     {
@@ -358,7 +356,7 @@ namespace TextVoicePlayer
         int[] startTimeMS;      // 各センテンスのスタートタイム
         int[] pauseTimeMS;      // 各センテンスのポーズタイム
 
-        private void separateTimeStamp()
+        private void SeparateTimeStamp()
         {
             // タイムスタンプの書式（正規表現用）
             var patternStart = @"\[\d{2}:\d{2}.\d{2}\]";
@@ -402,15 +400,15 @@ namespace TextVoicePlayer
                 string[] arr = sentences[n].Split(del, StringSplitOptions.None);
                 sentences[n] = arr[0];
                 sentences[n + 1] = arr[1];
-                Console.WriteLine("sentence[{0}]:{1}]", n, sentences[n]);
-                text = text + sentences[n];
+                //Console.WriteLine("sentence[{0}]:{1}]", n, sentences[n]);
+                text += sentences[n];
 
                 pauseTime[n + 1] = timeStampsPause[n].Value;
 
-                startTimeMS[n + 1] = timeStampToInt(startTime[n + 1]) - 0;
-                pauseTimeMS[n + 1] = timeStampToInt(pauseTime[n + 1]) + 0;
+                startTimeMS[n + 1] = TimeStampToInt(startTime[n + 1]) - 0;
+                pauseTimeMS[n + 1] = TimeStampToInt(pauseTime[n + 1]) + 0;
 
-                if (n == nMax - 2) text = text + sentences[n + 1];
+                if (n == nMax - 2) text += sentences[n + 1];
 
 
             }
@@ -422,7 +420,7 @@ namespace TextVoicePlayer
         }
 
         // タイムスタンプを整数型（ミリ秒）に変換
-        private int timeStampToInt(string timeStamp)
+        private int TimeStampToInt(string timeStamp)
         {
             if (timeStamp == null) return 0;
 
@@ -442,7 +440,7 @@ namespace TextVoicePlayer
             return intTime;
         }
 
-        private void textBox1_DoubleClick(object sender, EventArgs e)
+        private void TextBox1_DoubleClick(object sender, EventArgs e)
         {
             if (audioFile == null) return;
 
@@ -454,23 +452,23 @@ namespace TextVoicePlayer
 
         }
 
-        private void pictureBox3_Click(object sender, EventArgs e)
+        private void PictureBox3_Click(object sender, EventArgs e)
         {
             currentSentenceNumber++;
 
             if (currentSentenceNumber > nMax - 1) currentSentenceNumber = nMax - 1;
-            playSentence(currentSentenceNumber);
+            PlaySentence(currentSentenceNumber);
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
+        private void PictureBox1_Click(object sender, EventArgs e)
         {
             currentSentenceNumber--;
             if (currentSentenceNumber < 1) currentSentenceNumber = 1;
-            playSentence(currentSentenceNumber);
+            PlaySentence(currentSentenceNumber);
 
         }
 
-        private void fontToolStripMenuItem_Click(object sender, EventArgs e)
+        private void FontToolStripMenuItem_Click(object sender, EventArgs e)
         {
             fontDialog1.Font = richTextBox1.Font;
 
@@ -483,7 +481,7 @@ namespace TextVoicePlayer
         }
 
 
-        private void allFilesToolStripMenuItem_Click(object sender, EventArgs e)
+        private void AllFilesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             openFileDialog1.InitialDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.MyMusic); // Audioファイルと同じフォルダを開く
 
@@ -514,9 +512,9 @@ namespace TextVoicePlayer
             }
         }
 
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Text Voice Player version 0.12\n" +
+            MessageBox.Show("Text Voice Player version 0.12(on 07.July.2024)\n" +
                 "https://github.com/lets-study-with-textvoice \n" +
      "\n" +
      "Special Thanks NAudio\n" +
@@ -532,20 +530,20 @@ namespace TextVoicePlayer
 
         }
 
-        private void showHelpToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ShowHelpToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show("The help under construction now.");
 
         }
 
-        private void lisenceToolStripMenuItem_Click(object sender, EventArgs e)
+        private void LisenceToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form2 form2 = new Form2();
             form2.Show();
 
         }
 
-        private void escapeClauseToolStripMenuItem_Click(object sender, EventArgs e)
+        private void EscapeClauseToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form3 form3 = new Form3();
             form3.Show();

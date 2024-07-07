@@ -128,7 +128,7 @@
             this.openAudioFileToolStripMenuItem.Name = "openAudioFileToolStripMenuItem";
             this.openAudioFileToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
             this.openAudioFileToolStripMenuItem.Text = "OpenAudioFile";
-            this.openAudioFileToolStripMenuItem.Click += new System.EventHandler(this.openAudioFileToolStripMenuItem_Click);
+            this.openAudioFileToolStripMenuItem.Click += new System.EventHandler(this.OpenAudioFileToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
@@ -140,7 +140,7 @@
             this.openSentenceToolStripMenuItem.Name = "openSentenceToolStripMenuItem";
             this.openSentenceToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
             this.openSentenceToolStripMenuItem.Text = "OpenSentenceTimeStamperFile";
-            this.openSentenceToolStripMenuItem.Click += new System.EventHandler(this.openSentenceToolStripMenuItem_Click);
+            this.openSentenceToolStripMenuItem.Click += new System.EventHandler(this.OpenSentenceToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -166,7 +166,7 @@
             this.fontToolStripMenuItem.Name = "fontToolStripMenuItem";
             this.fontToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.fontToolStripMenuItem.Text = "ChangeAllFont";
-            this.fontToolStripMenuItem.Click += new System.EventHandler(this.fontToolStripMenuItem_Click);
+            this.fontToolStripMenuItem.Click += new System.EventHandler(this.FontToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -184,28 +184,28 @@
             this.showHelpToolStripMenuItem.Name = "showHelpToolStripMenuItem";
             this.showHelpToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.showHelpToolStripMenuItem.Text = "ShowHelp";
-            this.showHelpToolStripMenuItem.Click += new System.EventHandler(this.showHelpToolStripMenuItem_Click);
+            this.showHelpToolStripMenuItem.Click += new System.EventHandler(this.ShowHelpToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.aboutToolStripMenuItem.Text = "About";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
             // 
             // lisenceToolStripMenuItem
             // 
             this.lisenceToolStripMenuItem.Name = "lisenceToolStripMenuItem";
             this.lisenceToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.lisenceToolStripMenuItem.Text = "Lisence";
-            this.lisenceToolStripMenuItem.Click += new System.EventHandler(this.lisenceToolStripMenuItem_Click);
+            this.lisenceToolStripMenuItem.Click += new System.EventHandler(this.LisenceToolStripMenuItem_Click);
             // 
             // escapeClauseToolStripMenuItem
             // 
             this.escapeClauseToolStripMenuItem.Name = "escapeClauseToolStripMenuItem";
             this.escapeClauseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.escapeClauseToolStripMenuItem.Text = "Escape clause";
-            this.escapeClauseToolStripMenuItem.Click += new System.EventHandler(this.escapeClauseToolStripMenuItem_Click);
+            this.escapeClauseToolStripMenuItem.Click += new System.EventHandler(this.EscapeClauseToolStripMenuItem_Click);
             // 
             // openVoiceFileDialog
             // 
@@ -217,7 +217,7 @@
             // 
             // timer1
             // 
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
             // 
             // label3
             // 
@@ -252,7 +252,7 @@
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox3.TabIndex = 4;
             this.pictureBox3.TabStop = false;
-            this.pictureBox3.Click += new System.EventHandler(this.pictureBox3_Click);
+            this.pictureBox3.Click += new System.EventHandler(this.PictureBox3_Click);
             // 
             // playButton
             // 
@@ -265,7 +265,7 @@
             this.playButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.playButton.TabIndex = 3;
             this.playButton.TabStop = false;
-            this.playButton.Click += new System.EventHandler(this.playButton_Click);
+            this.playButton.Click += new System.EventHandler(this.PlayButton_Click);
             // 
             // pictureBox1
             // 
@@ -278,7 +278,7 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            this.pictureBox1.Click += new System.EventHandler(this.PictureBox1_Click);
             // 
             // openLRCFileDialog
             // 
@@ -325,8 +325,8 @@
             this.richTextBox1.Size = new System.Drawing.Size(508, 348);
             this.richTextBox1.TabIndex = 0;
             this.richTextBox1.Text = "";
-            this.richTextBox1.Click += new System.EventHandler(this.textBox1_Click);
-            this.richTextBox1.DoubleClick += new System.EventHandler(this.textBox1_DoubleClick);
+            this.richTextBox1.Click += new System.EventHandler(this.TextBox1_Click);
+            this.richTextBox1.DoubleClick += new System.EventHandler(this.TextBox1_DoubleClick);
             // 
             // Form1
             // 
